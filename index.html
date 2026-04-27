@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7d8bd">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Отмазки</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="game-shell">
+    <header class="topbar">
+      <h1 id="gameTitle">Отмазки</h1>
+      <p id="gameSubtitle">Лопай пузыри чтобы не попасть на свидание.</p>
+    </header>
+
+    <section class="arena" id="arena">
+      <div class="lane-divider" id="laneDivider" aria-hidden="true"></div>
+
+      <section class="character character-karen" id="karenChar" aria-label="Карэн">
+        <h2 class="char-name">Карэн</h2>
+        <div class="avatar-frame avatar-karen">
+          <img src="assets/karen.jpg" alt="Карэн" draggable="false">
+          <div class="toon-layer" aria-hidden="true"></div>
+          <div class="shine" aria-hidden="true"></div>
+        </div>
+        <div class="speech-bubble" id="replyBubble">Готов к раунду отмазок. Без обид, только юмор.</div>
+      </section>
+
+      <div class="bubble-layer" id="bubbleLayer" aria-live="polite"></div>
+
+      <section class="character character-her" id="herChar" aria-label="Ты">
+        <h2 class="char-name">Ты</h2>
+        <div class="avatar-frame avatar-her">
+          <img src="assets/girl.jpg" alt="Ты" draggable="false">
+          <div class="toon-layer" aria-hidden="true"></div>
+          <div class="shine" aria-hidden="true"></div>
+          <div class="crossed-arms" aria-hidden="true">
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <footer class="hud">
+      <p id="progressText">Отмазок осталось: 0</p>
+      <button id="restartBtn" type="button">Перезапуск</button>
+    </footer>
+  </main>
+
+  <section class="final-overlay is-hidden" id="finalOverlay" aria-live="polite">
+    <div class="final-card">
+      <h2 id="finalTitle">Отмазки кончились.</h2>
+      <p id="finalMessage">Осталось только свидание. Суббота, 19:00?</p>
+      <div class="final-actions">
+        <button id="yesBtn" type="button">Хорошо, уговорил</button>
+        <button id="moreBtn" type="button">Хочу ещё отмазок!</button>
+      </div>
+      <p class="result-line" id="resultLine"></p>
+    </div>
+  </section>
+
+  <script src="phrases.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>

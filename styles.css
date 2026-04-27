@@ -1,0 +1,402 @@
+:root {
+  --bg-top: #fdf2dc;
+  --bg-bottom: #ffd8bf;
+  --ink: #2b1f1b;
+  --accent: #ef6a43;
+  --accent-2: #2d8f87;
+  --bubble: rgba(255, 255, 255, 0.88);
+  --bubble-border: rgba(43, 31, 27, 0.17);
+  --shell-shadow: 0 18px 40px rgba(58, 29, 18, 0.2);
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  font-family: "Trebuchet MS", "Gill Sans", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 12%, rgba(255, 255, 255, 0.75), transparent 34%),
+    radial-gradient(circle at 88% 8%, rgba(255, 209, 173, 0.76), transparent 28%),
+    linear-gradient(165deg, var(--bg-top), var(--bg-bottom));
+  padding-top: calc(10px + var(--safe-top));
+  padding-right: calc(10px + var(--safe-right));
+  padding-bottom: calc(10px + var(--safe-bottom));
+  padding-left: calc(10px + var(--safe-left));
+}
+
+.game-shell {
+  width: min(100%, 430px);
+  min-height: calc(100dvh - 20px - var(--safe-top) - var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, rgba(255, 250, 241, 0.97), rgba(255, 245, 230, 0.96));
+  border-radius: 28px;
+  box-shadow: var(--shell-shadow);
+  overflow: hidden;
+  border: 2px solid rgba(255, 255, 255, 0.72);
+}
+
+.topbar {
+  text-align: center;
+  padding: 14px 14px 8px;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  letter-spacing: 0.2px;
+}
+
+.topbar p {
+  margin: 8px auto 0;
+  color: rgba(43, 31, 27, 0.86);
+  font-size: 0.94rem;
+}
+
+.arena {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "karen her"
+    "bubbles bubbles";
+  gap: 8px;
+  padding: 8px 10px 10px;
+}
+
+.arena::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 20px;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.28) 12px,
+      rgba(255, 255, 255, 0.1) 12px,
+      rgba(255, 255, 255, 0.1) 24px
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.character {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.character-karen {
+  grid-area: karen;
+  position: relative;
+}
+
+.character-her {
+  grid-area: her;
+}
+
+.char-name {
+  margin: 0 0 6px;
+  font-size: 1.04rem;
+  letter-spacing: 0.2px;
+}
+
+.avatar-frame {
+  width: min(43vw, 168px);
+  aspect-ratio: 3 / 4;
+  border-radius: 22px;
+  padding: 6px;
+  background: linear-gradient(160deg, #fff, #ffe9d7);
+  box-shadow: 0 8px 18px rgba(27, 18, 15, 0.22);
+  position: relative;
+}
+
+.avatar-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  filter: saturate(1.18) contrast(1.1) brightness(1.04);
+}
+
+.toon-layer {
+  position: absolute;
+  inset: 6px;
+  border-radius: 16px;
+  background:
+    radial-gradient(circle at 26% 14%, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0) 38%),
+    linear-gradient(170deg, rgba(0, 0, 0, 0) 46%, rgba(0, 0, 0, 0.16));
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.shine {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.22) 58%, transparent 70%);
+  pointer-events: none;
+}
+
+.crossed-arms {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  width: 94px;
+  height: 32px;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.crossed-arms span {
+  position: absolute;
+  width: 56px;
+  height: 12px;
+  top: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #302a25, #171615);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+.crossed-arms span:first-child {
+  left: 8px;
+  transform: rotate(17deg);
+}
+
+.crossed-arms span:last-child {
+  right: 8px;
+  transform: rotate(-16deg);
+}
+
+.speech-bubble {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  width: calc(200% + 8px);
+  min-height: 52px;
+  padding: 8px 9px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 2px solid rgba(43, 31, 27, 0.14);
+  box-shadow: 0 7px 14px rgba(18, 10, 8, 0.14);
+  font-size: 0.76rem;
+  line-height: 1.26;
+  text-align: left;
+  opacity: 0.9;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  z-index: 5;
+}
+
+.speech-bubble.is-visible {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.lane-divider {
+  display: none;
+}
+
+.bubble-layer {
+  grid-area: bubbles;
+  position: relative;
+  min-height: 236px;
+  height: clamp(236px, 34dvh, 330px);
+  width: 100%;
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.26);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+}
+
+.excuse-bubble {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--bubble-border);
+  background:
+    radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.68) 48%, rgba(255, 255, 255, 0.5)),
+    var(--bubble);
+  color: #402e28;
+  line-height: 1.2;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: inset 0 -6px 12px rgba(0, 0, 0, 0.04), 0 7px 14px rgba(65, 45, 31, 0.2);
+  transition: transform 0.14s ease, box-shadow 0.2s ease;
+  user-select: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.excuse-bubble:hover {
+  box-shadow: inset 0 -7px 13px rgba(0, 0, 0, 0.06), 0 10px 18px rgba(65, 45, 31, 0.24);
+}
+
+.excuse-bubble:active {
+  transform: scale(0.95);
+}
+
+.excuse-bubble.is-popping {
+  animation: pop 0.24s cubic-bezier(0.58, 0.08, 1, 0.44) forwards;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.16);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+}
+
+.hud {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 10px 10px 12px;
+}
+
+.hud p {
+  margin: 0;
+  font-weight: 700;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+button {
+  border: 0;
+  border-radius: 14px;
+  min-height: 46px;
+  padding: 10px 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #fff;
+  background: linear-gradient(160deg, var(--accent), #cf4b28);
+  box-shadow: 0 8px 18px rgba(202, 69, 34, 0.34);
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:hover {
+  filter: brightness(1.06);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.final-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(32, 20, 16, 0.52);
+  backdrop-filter: blur(5px);
+  display: grid;
+  place-items: center;
+  z-index: 20;
+  padding: 12px;
+}
+
+.final-overlay.is-hidden {
+  display: none;
+}
+
+.final-card {
+  width: min(96vw, 420px);
+  background: linear-gradient(165deg, #fff8ef, #ffe9d3);
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 16px 34px rgba(26, 16, 12, 0.32);
+  padding: 18px 14px;
+  text-align: center;
+}
+
+.final-card h2 {
+  margin: 0;
+  font-size: 1.45rem;
+}
+
+.final-card p {
+  margin: 10px 0 0;
+  font-size: 1rem;
+}
+
+.final-actions {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.final-actions button:last-child {
+  background: linear-gradient(160deg, var(--accent-2), #226f6a);
+  box-shadow: 0 8px 18px rgba(28, 103, 97, 0.35);
+}
+
+.result-line {
+  min-height: 1.6em;
+  color: #2b201c;
+  font-weight: 700;
+}
+
+.arena.is-win .character-karen {
+  transform: translateX(14px);
+}
+
+.arena.is-win .character-her {
+  transform: translateX(-14px);
+}
+
+@media (max-width: 360px) {
+  .avatar-frame {
+    width: min(42vw, 150px);
+  }
+
+  .speech-bubble {
+    width: calc(200% + 8px);
+    font-size: 0.72rem;
+  }
+
+  .char-name {
+    font-size: 0.98rem;
+  }
+}
